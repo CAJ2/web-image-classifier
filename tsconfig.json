@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "esnext",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "typings/"
+        ],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+}
