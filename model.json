@@ -1,0 +1,77 @@
+{
+    "modelTopology": null,
+    "weightsManifest": [
+        {
+            "paths": [
+                "group1-shard1of2",
+                "group1-shard2of2"
+            ],
+            "weights": [
+                {
+                    "name": "conv2d_1/kernel",
+                    "shape": [
+                        3,
+                        3,
+                        1,
+                        32
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "conv2d_1/bias",
+                    "shape": [
+                        32
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "conv2d_2/kernel",
+                    "shape": [
+                        3,
+                        3,
+                        32,
+                        64
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "conv2d_2/bias",
+                    "shape": [
+                        64
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "dense_1/kernel",
+                    "shape": [
+                        9216,
+                        128
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "dense_1/bias",
+                    "shape": [
+                        128
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "dense_2/kernel",
+                    "shape": [
+                        128,
+                        10
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "dense_2/bias",
+                    "shape": [
+                        10
+                    ],
+                    "dtype": "float32"
+                }
+            ]
+        }
+    ]
+}
