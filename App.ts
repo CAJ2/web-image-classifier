@@ -7,45 +7,60 @@ import * as compression from 'compression';
 import * as path from 'path';
 import * as fs from 'fs';
 
+import { Classify } from './Classify';
 import { Queue } from './Queue';
 import { Events } from './Events';
 
 class App {
 
     app: express.Application;
-    socket: io.Server;
+    io: io.Server;
     mq: amqp.Connection;
+    classify: Classify;
     queue: Queue;
     events: Events;
 
     constructor() {
         this.app = express();
-        this.socket = io(createServer(this.app));
+        this.io = io(createServer(this.app));
+        this.classify = new Classify();
         this.queue = new Queue();
         this.events = new Events();
     }
 
     async init(): Promise<void> {
+
+        // Set port, hostname, etc.
         this.app.set('port', (process.env.PORT || 1337));
 
         if (process.env.HOST) {
             this.app.set('host', process.env.HOST);
         }
 
+        // Connect to local RabbitMQ
         this.mq = await amqp.connect('amqp://localhost');
 
+        // Initialize helpers
+        await this.classify.init();
         await this.queue.init();
         this.events.init();
 
+        // Define upload route
         this.app.post('/upload',
             multer({ dest: './uploads/' }).single('image'),
             (req: express.Request, res: express.Response) => {
 
-                this.queue.queueImage(new Buffer(fs.readFileSync(req.file.path)).toString('base64'));
+                console.log(req.file.buffer);
+                const fileData = req.file.buffer;
 
+                const image = new ImageData(new Uint8ClampedArray(fileData), 28, 28);
+                console.log(image);
+                console.log(this.classify.predict(image));
+
+                // Send response
                 res.json({
                     status: 'SUCCESS',
-                    message: 'Image queued for classification',
+                    message: 'Image uploaded',
                 });
 
         });
